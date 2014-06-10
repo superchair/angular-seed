@@ -1,6 +1,14 @@
 'use strict';
 var angularSeed = angular.module('AngularSeed', []);
 
-angularSeed.controller('alexController', function($scope) {
-    $scope.bob = 5;
+angularSeed.controller('ctrlOne', function($scope) {
+    $scope.bob = 'bob';
+});
+
+angularSeed.controller('ctrlTwo', function($scope) {
+    $scope.ann = 'ann';
+});
+
+angularSeed.controller('ctrlThree', function($scope) {
+    $scope.bob = 'different_bob';
 });

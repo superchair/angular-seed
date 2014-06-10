@@ -10,9 +10,25 @@
 
         <link href="css/main.css" rel="stylesheet" />
     </head>
-    <body ng-controller="alexController">
-        <input ng-model="bob" type="text"/>
-        {{bob}}
+    <body>
+
+        <div ng-controller="ctrlOne">
+            <div>'{{bob}}' comes from ctrlOne</div>
+            <div ng-controller="ctrlTwo">
+                <div>'{{bob}}' comes from ctrlOne because ctrlTwo doesn't have a bob assigned, but this dom element is a sibling to a ctrlOne controller</div>
+                <div>'{{ann}}' comes from ctrlTwo</div>
+            </div>
+            <div ng-controller="ctrlThree">
+                <div>'{{bob}}' bob variable is different because ctrlThree has a bob defined.</div>
+            </div>
+            <div> but it doesn't overwrite the '{{bob}}' from ctrlOne!</div>
+        </div>
+        <div ng-controller="ctrlTwo">
+            <div>You can reuse controllers, but be careful!</div>
+            <div>'{{ann}}' comes from ctrlTwo, but</div>
+            <div>'{{bob}}' can't be found because we're not in a child dom element of a ctrlOne controller!</div>
+        </div>
+
         <script type="text/javascript" src="lib/jquery.js"></script>
         <script type="text/javascript" src="lib/angular.js"></script>
         <script type="text/javascript" src="js/main.js"></script>

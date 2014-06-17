@@ -1,26 +1,38 @@
 'use strict';
-var angularSeed = angular.module('AngularSeed', []);
+var angularSeed = angular.module('AngularSeed', [
+    'SubModule',
+]);
 
-angularSeed.directive('helloName', function() {
+angularSeed.config(['myAgeProvider', function(myAgeProvider) {
+    myAgeProvider.setInitialAge(20);
+}]);
+
+var subModule = angular.module('SubModule', ['SubModule']);
+
+subModule.provider('myAge', function() {
+    var myAge = 30;
+    return {
+        setInitialAge: function(age) {
+            myAge = age;
+        },
+
+        $get: function() {
+            return myAge;
+        }
+    };
+});
+
+subModule.directive('helloName', function() {
     return {
         restrict: 'E',
         templateUrl: 'templates/helloName.tmpl.html',
         replace: true,
         scope: {
-            color: '@'
+            color: '@background'
         },
-        controller: function($scope) {
-
-            $scope.onClick = function() {
-                console.log('hi');
-                if($scope.color == 'blue') {
-                    $scope.color = 'red';
-                }
-                else {
-                    $scope.color = 'blue';
-                }
-            };
-        },
+        controller: ['$scope', 'myAge', function($scope, myAge) {
+            console.log(myAge);
+        }],
         link: function(scope, elem, attrs) {
             elem.attr('class', 'testclass');
         }
